@@ -112,13 +112,6 @@ export default {
      */
     handleStop (isStop) {
       this.isStopScroll = isStop
-      if (!isStop) {
-        // 继续滚动
-        this.scrollList()
-      } else {
-        // 停止滚动
-        this.clearTimer()
-      }
     },
     /**
      * 渲染项 - 渲染每一项
@@ -168,10 +161,14 @@ export default {
       immediate: true,
       deep: true
     },
-    isScroll: {
+    isStopScroll: {
       handler (newV) {
-        if (newV) {
-
+        if (!newV && this.isScroll) {
+          // 滚动
+          this.scrollList()
+        } else {
+          // 停止滚动
+          this.clearTimer()
         }
       },
       immediate: true

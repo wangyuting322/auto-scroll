@@ -4,9 +4,7 @@
  */
 export default {
   name: 'AutoScroll',
-  components: {
-
-  },
+  components: {},
   props: {
     /**
      * 数据来源
@@ -34,7 +32,9 @@ export default {
      */
     customRenderItem: {
       type: Function,
-      default: (value, index) => { return <div>数据项{index}</div> }
+      default: (value, index) => {
+        return <div>数据项{index}</div>
+      }
     },
     /**
      * 每1/60秒滚动的位移像素
@@ -43,11 +43,10 @@ export default {
       type: Number,
       default: 0.5
     }
-
   },
   data () {
     return {
-      randomNum: (new Date()).getTime(),
+      randomNum: new Date().getTime(),
       // 是否开启去滚动
       isScroll: false,
       // 距离顶部的距离
@@ -79,9 +78,13 @@ export default {
     scrollList () {
       this.clearTimer()
       this.$nextTick(() => {
-        const autoScrollContent = document.querySelector(`.auto-scroll-content${this.randomNum}`)
+        const autoScrollContent = document.querySelector(
+          `.auto-scroll-content${this.randomNum}`
+        )
         // 没找到则重复执行
-        if (!autoScrollContent) { return this.scrollList() }
+        if (!autoScrollContent) {
+          return this.scrollList()
+        }
         const fn = () => {
           // 向上滚动
           if (this.direction === 'top') {
@@ -115,13 +118,6 @@ export default {
      */
     handleStop (isStop) {
       this.isStopScroll = isStop
-      if (!isStop) {
-        // 继续滚动
-        this.scrollList()
-      } else {
-        // 停止滚动
-        this.clearTimer()
-      }
     },
     /**
      * 渲染项 - 渲染每一项
@@ -135,28 +131,33 @@ export default {
     renderContent () {
       if (!this.isScroll) {
         return (
-          <div class={`auto-scroll-content ${this.direction === 'top' ? 'direction-top' : 'direction-left'} auto-scroll-content${this.randomNum}`}>
-            {
-              this.listData.map((item, index) => {
-                return this.renderItem(item, index)
-              })
-            }
+          <div
+            class={`auto-scroll-content ${
+              this.direction === 'top' ? 'direction-top' : 'direction-left'
+            } auto-scroll-content${this.randomNum}`}
+          >
+            {this.listData.map((item, index) => {
+              return this.renderItem(item, index)
+            })}
           </div>
         )
       }
       // 需要滚动则先复制一遍data内容 - 滚动到数据尾部时，能在尾部显示数据头部
       return (
-        <div onMouseleave={() => this.handleStop(false)} onMouseenter={() => this.handleStop(true)} style={this.scrollStyle} class={`auto-scroll-content ${this.direction === 'top' ? 'direction-top' : 'direction-left'}  auto-scroll-content${this.randomNum}`}>
-          {
-            this.listData.map((item, index) => {
-              return this.renderItem(item, index)
-            })
-          }
-          {
-            this.listData.map((item, index) => {
-              return this.renderItem(item, index)
-            })
-          }
+        <div
+          onMouseleave={() => this.handleStop(false)}
+          onMouseenter={() => this.handleStop(true)}
+          style={this.scrollStyle}
+          class={`auto-scroll-content ${
+            this.direction === 'top' ? 'direction-top' : 'direction-left'
+          }  auto-scroll-content${this.randomNum}`}
+        >
+          {this.listData.map((item, index) => {
+            return this.renderItem(item, index)
+          })}
+          {this.listData.map((item, index) => {
+            return this.renderItem(item, index)
+          })}
         </div>
       )
     }
@@ -171,21 +172,21 @@ export default {
       immediate: true,
       deep: true
     },
-    isScroll: {
+    isStopScroll: {
       handler (newV) {
-        if (newV) {
-
+        if (!newV && this.isScroll) {
+          // 滚动
+          this.scrollList()
+        } else {
+          // 停止滚动
+          this.clearTimer()
         }
       },
       immediate: true
     }
   },
-  created () {
-
-  },
-  mounted () {
-
-  },
+  created () {},
+  mounted () {},
   activated () {
     if (this.isScroll) {
       this.handleStop(true)
@@ -204,9 +205,7 @@ export default {
   render (h) {
     return (
       <div class={`auto-scroll auto-scroll-wrapper${this.randomNum}`}>
-        {
-          this.renderContent()
-        }
+        {this.renderContent()}
       </div>
     )
   }
