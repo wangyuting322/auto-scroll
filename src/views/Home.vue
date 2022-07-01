@@ -1,9 +1,14 @@
 <script>
 import AutoScroll from '@/components/AutoScroll.vue'
+import AutoScroll2 from '@/components/AutoScroll2.vue'
+import AutoScrollSlot from '@/components/AutoScrollSlot.vue'
 export default {
   name: 'Home',
   components: {
-    AutoScroll
+    AutoScroll,
+    AutoScroll2,
+    AutoScrollSlot
+
   },
   data () {
     return {
@@ -27,6 +32,8 @@ export default {
       <div class='home'>
         <AutoScroll class='height300 width300' listData={this.list} direction='left' maxNum={10} customRenderItem={this.customRenderItem}>
         </AutoScroll>
+        <AutoScroll2 class='height300 width300' listData={this.list} direction='left' maxNum={10} customRenderItem={this.customRenderItem}>
+        </AutoScroll2>
       </div>
     )
   }
@@ -34,7 +41,7 @@ export default {
 </script>
 <style lang="scss">
 .home {
-  height: 100%;
+  // height: 100%;
   width: 100%;
 }
 .height300 {
@@ -46,7 +53,7 @@ export default {
 }
 .width50 {
   width: 50px;
-  height:50px;
+  height: 50px;
   background-color: #42dd;
   margin: 5px;
 }
