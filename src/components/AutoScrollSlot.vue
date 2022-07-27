@@ -96,6 +96,7 @@ export default {
             }
             // 没有停止滚动，则每次向上滚动；
             this.topLength -= this.scrollDiatance
+            this.clearTimer()
             this.timer = requestAnimationFrame(fn)
           } else {
             // 向左滚动
@@ -107,9 +108,11 @@ export default {
             }
             // 没有停止滚动，则每次向上滚动；
             this.leftLength -= this.scrollDiatance
+            this.clearTimer()
             this.timer = requestAnimationFrame(fn)
           }
         }
+        this.clearTimer()
         this.timer = requestAnimationFrame(fn)
       })
     },
