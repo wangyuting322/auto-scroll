@@ -172,6 +172,8 @@ export default {
       handler (newV, oldV) {
         if (newV && newV.length > this.maxNum) {
           this.isScroll = true
+        } else {
+          this.isScroll = false
         }
       },
       immediate: true,
