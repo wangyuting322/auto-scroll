@@ -23,7 +23,15 @@ export default {
   methods: {
     customRenderItem (value, index) {
       return (
-        <p class='width50'>{value.name}{value.age}</p>
+        <div class="flex-row">
+          <div class='width50'>
+            {value.name}
+          </div>
+          <div class='width50 oo'>
+            {value.age}
+            <div class='kk'>dsad </div>
+          </div>
+        </div>
       )
     }
   },
@@ -56,5 +64,12 @@ export default {
   height: 50px;
   background-color: #42dd;
   margin: 5px;
+}
+.oo{
+  position: relative;
+  overflow: hidden;
+}
+.kk{
+  position: absolute;
 }
 </style>

@@ -13,7 +13,9 @@ export default {
     return {
       list: [
         { path: '/', name: 'jsx语法模拟' },
-        { path: '/about', name: 'template语法模拟' }
+        { path: '/about', name: 'template语法模拟' },
+        { path: '/contentAutoScrollTest', name: '根据内容自动滚动(scroll)' },
+        { path: '/contentAutoScrollTest2', name: '根据内容自动滚动(absolute)' }
       ]
     }
   },
