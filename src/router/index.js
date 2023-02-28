@@ -4,6 +4,7 @@ import Home from '../views/Home.vue'
 import About from '../views/About.vue'
 import ContentAutoScrollTest from '../views/ContentAutoScrollTest.vue'
 import ContentAutoScrollTest2 from '../views/ContentAutoScrollTest2.vue'
+import ContentAutoScrollTest3 from '../views/ContentAutoScrollTest3.vue'
 
 Vue.use(VueRouter)
 
@@ -27,6 +28,11 @@ const routes = [
     path: '/contentAutoScrollTest2',
     name: 'ContentAutoScrollTest2',
     component: ContentAutoScrollTest2
+  },
+  {
+    path: '/ContentAutoScrollTest3',
+    name: 'ContentAutoScrollTest3',
+    component: ContentAutoScrollTest3
   }
 ]
 

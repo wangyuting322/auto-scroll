@@ -1,3 +1,15 @@
+<template>
+  <div class="ContentAutoScroll" :class="`${direction === 'top' ? '' : isScroll ? 'ContentAutoScroll-row-scroll' : 'ContentAutoScroll-row'} `" :id="`ContentAutoScroll${randomNum}`">
+        <div class="ContentAutoScroll-wrapper" :class="`${direction === 'top' ? 'ContentAutoScroll-wrapper-col' : 'ContentAutoScroll-wrapper-row'} ${isScroll ? (direction === 'top' ? 'innerActiveCol' : 'innerActiveRow') : ''}`" :id="`ContentAutoScroll-wrapper${randomNum}`" @mousewheel="handleScroll">
+          <div class="ContentAutoScroll-content" :id="`ContentAutoScroll-content${randomNum}`">
+           <slot></slot>
+          </div>
+           <div v-show="isScroll" class="ContentAutoScroll-content" :id="`ContentAutoScroll-content${randomNum}`" :style="`--m:${margin}px`">
+           <slot></slot>
+          </div>
+        </div>
+      </div>
+</template>
 <script>
 /**
  * 根据内容是否超出长度自动判断是否需要滚动 - 样式为overflow:auto - 隐藏滚动条
@@ -9,13 +21,6 @@ export default {
 
   },
   props: {
-    /**
-     * 内容渲染
-     */
-    renderContent: {
-      type: Function,
-      default: (h) => { return (<div></div>) }
-    },
     // 滚动方向 - top向上/left向左
     direction: {
       type: String,
@@ -79,44 +84,15 @@ export default {
     }
   },
   watch: {
-    renderContent: {
-      handler (newV) {
-        if (newV) {
-          this.tellScroll()
-        } else {
-          this.isScroll = false
-        }
-      },
-      deep: true,
-      immediate: true
-    }
   },
   created () {
   },
   mounted () {
+    this.tellScroll()
   },
   beforeDestroy () {
-  },
-  render () {
-    return (
-      <div class={`ContentAutoScroll ${this.direction === 'top' ? '' : this.isScroll ? 'ContentAutoScroll-row-scroll' : 'ContentAutoScroll-row'} `} id={`ContentAutoScroll${this.randomNum}`}>
-        <div class={`ContentAutoScroll-wrapper ${this.direction === 'top' ? 'ContentAutoScroll-wrapper-col' : 'ContentAutoScroll-wrapper-row'} ${this.isScroll ? (this.direction === 'top' ? 'innerActiveCol' : 'innerActiveRow') : ''}`} id={`ContentAutoScroll-wrapper${this.randomNum}`} onMousewheel={this.handleScroll}>
-          <div class="ContentAutoScroll-content" id={`ContentAutoScroll-content${this.randomNum}`}>
-            {this.renderContent && this.renderContent()}
-          </div>
-          {
-            // 滚动的话重复一遍
-            this.isScroll ? (
-              <div class="ContentAutoScroll-content" id={`ContentAutoScroll-content${this.randomNum}`}>
-                {this.renderContent()}
-              </div>
-            ) : null
-          }
-
-        </div>
-      </div>
-    )
   }
+
 }
 </script>
 <style lang="scss" scoped>
@@ -174,9 +150,6 @@ export default {
   }
   &-content {
     height: auto;
-  }
-  &-content:not(:first-child) {
-    margin-left: 20px;
   }
 }
 .innerActiveCol {
